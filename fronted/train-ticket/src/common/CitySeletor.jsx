@@ -9,10 +9,11 @@ const toAlpha = alpha=>{
     document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
 }
 
+
 const CityItem = memo(
     function CityItem(props){
         const {name,onSelect} =props
-        
+
         return (
             <li className="city-li" onClick={()=>onSelect(name)} >
                 {name}
@@ -37,7 +38,7 @@ const CitySection = memo(
             </ul>
         )
     }
-    
+
 )
 
 const AlphaIndex = memo(function AlphaIndex(props) {
@@ -59,17 +60,17 @@ const CityList = memo(
                     {
                         sections.map(section=>{
                             return (
-                                <CitySection title={section.title} cities={section.citys} key={section.title} onSelect={onSelect} ></CitySection>
+                                <CitySection title={section.title} cities={section.citys} key={section.title} onSelect={onSelect}></CitySection>
                             )
                         })
                     }
                 </div>
                 <div className="city-index">
                     {
-                        
+
                         alphabet.map((item,key)=>{
                             return (
-                                <AlphaIndex key={key} alpha={item} />
+                                <AlphaIndex key={key} alpha={item} onClick={toAlpha} />
                                 // <div>{item}</div>
                             )
                         })
@@ -80,7 +81,61 @@ const CityList = memo(
     }
 )
 
+const SuggestItem = memo(function SuggestItem(props) {
+    const { name, onClick } = props;
 
+    return (
+        <li className="city-suggest-li" onClick={() => onClick(name)}>
+            {name}
+        </li>
+    );
+});
+
+const Suggest = memo(function Suggest(props) {
+    const { searchKey, onSelect } = props;
+
+    const [result, setResult] = useState([]);
+
+    useEffect(() => {
+        fetch('/rest/search?key=' + encodeURIComponent(searchKey))
+            .then(res => res.json())
+            .then(data => {
+                const { result, searchKey: sKey } = data;
+
+                if (sKey === searchKey) {
+                    setResult(result);
+                }
+            });
+    }, [searchKey]);
+
+    const fallBackResult = useMemo(() => {
+        if (!result.length) {
+            return [
+                {
+                    display: searchKey,
+                },
+            ];
+        }
+
+        return result;
+    }, [result, searchKey]);
+
+    return (
+        <div className="city-suggest">
+            <ul className="city-suggest-ul">
+                {fallBackResult.map(item => {
+                    return (
+                        <SuggestItem
+                            key={item.display}
+                            name={item.display}
+                            onClick={onSelect}
+                        />
+                    );
+                })}
+            </ul>
+        </div>
+    );
+});
 
 const CitySelector=memo(
     function CitySelector(props){
@@ -92,11 +147,11 @@ const CitySelector=memo(
             if(show){
                 fetchCityData()
             }
-            },[show,cityData,isLoading])
+        },[show,cityData,isLoading])
         const outputCitySections = () =>{
             if(isLoading){
                 return <div>Loading</div>
-            } 
+            }
             if(cityData){
                 return (<CityList onSelect={onSelect} sections={cityData.cityList} toAlpha={toAlpha}></CityList>)
             }
@@ -130,9 +185,9 @@ const CitySelector=memo(
                         &#xf063;
                     </i>
                 </div>
-                {/* {Boolean(key) && (
-                    <Suggest searchKey={key} onSelect={key => onSelect(key)} />
-                )} */}
+                {searchKey!='' && (
+                    <Suggest searchKey={searchKey} onSelect={searchKey => onSelect(searchKey)} />
+                )}
                 {outputCitySections()}
             </div>
         )

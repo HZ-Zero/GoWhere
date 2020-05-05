@@ -10,7 +10,7 @@ import CitySeletor from '../common/CitySeletor'
 import {exchangeFromTo,showCitySelector,hideCitySelector,fetchCityData,setSelectedCity} from './action'
 import { bindActionCreators } from 'redux'
 function App (props){
-    const {from,to,dispatch,isCitySelectorVisible,cityData,isDateSelectorVisible,setSelectedCity} = props;
+    const {from,to,dispatch,isCitySelectorVisible,cityData,isDateSelectorVisible} = props;
     const onBack = useCallback(()=>{
         window.history.back()
     },[])
@@ -20,7 +20,7 @@ function App (props){
                 onBack:hideCitySelector,fetchCityData,onSelect:setSelectedCity
             },dispatch
         )
-        })
+        },[])
     return (
         <div>
             <div className="header-wrapper">
