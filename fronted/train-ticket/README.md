@@ -16,12 +16,12 @@ npm start
 
 ### 筛选图层
 
-![image-20200510215456829](C:\Users\-ZERO\AppData\Roaming\Typora\typora-user-images\image-20200510215456829.png)
+![image-20200510215456829](https://github.com/HZ-Zero/GoWhere/blob/master/fronted/train-ticket/pic/image-20200510215456829.png)
 
 ### 购票图层
 
-![image-20200510215534632](C:\Users\-ZERO\AppData\Roaming\Typora\typora-user-images\image-20200510215534632.png)
+![image-20200510215534632](https://github.com/HZ-Zero/GoWhere/blob/master/fronted/train-ticket/pic/image-20200510215534632.png)
 
 ### 订单图层
 
-![image-20200510215626114](C:\Users\-ZERO\AppData\Roaming\Typora\typora-user-images\image-20200510215626114.png)
+![image-20200510215626114](https://github.com/HZ-Zero/GoWhere/blob/master/fronted/train-ticket/pic/image-20200510215626114.png)
