@@ -112,7 +112,7 @@ export function setDepartDate(departDate) {
         payload: departDate,
     };
 }
-export function fetchCityData(){
+export function fetchCityData() {
     return (dispatch, getState) => {
         const { isLoadingCityData } = getState();
 
@@ -143,7 +143,7 @@ export function fetchCityData(){
                         expires: Date.now() + 60 * 1000,
                         data: cityData,
                     })
-                ); 
+                );
 
                 dispatch(setIsLoadingCityData(false));
             })

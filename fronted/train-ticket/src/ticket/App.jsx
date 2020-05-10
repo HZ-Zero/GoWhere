@@ -1,15 +1,15 @@
-import './App.css'
-import {connect} from 'react-redux'
-import React,{useCallback,useEffect,lazy,Suspense} from 'react'
-import Header from '../common/Header'
-import URI from 'urijs'
-import Candidate from './Candidate'
+import './App.css';
+import { connect } from 'react-redux';
+import React, { useCallback, useEffect, lazy, Suspense } from 'react';
+import Header from '../common/Header';
+import URI from 'urijs';
+import Candidate from './Candidate';
 // import Schedule  from './Schedule'
 import useNav from '../common/useNav';
-import {h0} from '../common/fp'
+import { h0 } from '../common/fp';
 import dayjs from 'dayjs';
-import Nav from '../common/Nav'
-import Detail from './Detail'
+import Nav from '../common/Nav';
+import Detail from './Detail';
 import { TrainContext } from './context';
 import {
     setDepartStation,
@@ -28,7 +28,7 @@ import {
 } from './action';
 
 const Schedule = lazy(() => import('./Schedule.jsx'));
-function App (props){
+function App(props) {
     const {
         departDate,
         arriveDate,
@@ -47,7 +47,7 @@ function App (props){
         window.history.back();
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         const queries = URI.parseQuery(window.location.search);
         const { aStation, dStation, date, trainNumber } = queries;
 
@@ -56,28 +56,26 @@ function App (props){
         dispatch(setTrainNumber(trainNumber));
         dispatch(setDepartDate(h0(dayjs(date).valueOf())));
         dispatch(setSearchParsed(true));
-
-    },[])
+    }, []);
     const { isPrevDisabled, isNextDisabled, prev, next } = useNav(
         departDate,
         dispatch,
         prevDate,
         nextDate
     );
-    useEffect(()=>{
-        document.title=trainNumber
-    },[trainNumber])
+    useEffect(() => {
+        document.title = trainNumber;
+    }, [trainNumber]);
 
-    useEffect(()=>{
-        if(!setSearchParsed)
-            return
+    useEffect(() => {
+        if (!setSearchParsed) return;
         const url = new URI('/rest/ticket')
-            .setSearch('date',dayjs(departDate).format('YYYY-MM-DD'))
-            .setSearch('trainNumber',trainNumber)
-            .toString()
+            .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
+            .setSearch('trainNumber', trainNumber)
+            .toString();
         fetch(url)
-            .then(res=>res.json())
-            .then((result=>{
+            .then(res => res.json())
+            .then(result => {
                 const { detail, candidates } = result;
 
                 const {
@@ -91,8 +89,8 @@ function App (props){
                 dispatch(setArriveDate(arriveDate));
                 dispatch(setDurationStr(durationStr));
                 dispatch(setTickets(candidates));
-            }))
-    },[setSearchParsed])
+            });
+    }, [setSearchParsed]);
 
     return (
         <div className="app">
@@ -139,7 +137,7 @@ function App (props){
             >
                 <Candidate tickets={tickets} />
             </TrainContext.Provider>
-            {isScheduleVisible?(
+            {isScheduleVisible ? (
                 <div
                     className="mask"
                     onClick={() => dispatch(toggleIsScheduleVisible())}
@@ -153,9 +151,9 @@ function App (props){
                         />
                     </Suspense>
                 </div>
-            ):null}
+            ) : null}
         </div>
-    )
+    );
 }
 export default connect(
     function mapStateToProps(state) {

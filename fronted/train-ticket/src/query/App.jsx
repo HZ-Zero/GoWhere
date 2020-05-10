@@ -1,11 +1,11 @@
-import './App.css'
-import {connect} from 'react-redux'
-import React,{useCallback,useEffect,useMemo} from 'react'
-import Nav from '../common/Nav'
-import URI from 'urijs'
-import List from './List'
-import Bottom from './Bottom'
-import Header from '../common/Header'
+import './App.css';
+import { connect } from 'react-redux';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import Nav from '../common/Nav';
+import URI from 'urijs';
+import List from './List';
+import Bottom from './Bottom';
+import Header from '../common/Header';
 import { bindActionCreators } from 'redux';
 import {
     setFrom,
@@ -33,9 +33,9 @@ import {
     setArriveTimeStart,
     setArriveTimeEnd,
 } from './action';
-import dayjs from 'dayjs'
-import {h0} from '../common/fp'
-function App (props){
+import dayjs from 'dayjs';
+import { h0 } from '../common/fp';
+function App(props) {
     const {
         trainList,
         from,
@@ -61,22 +61,22 @@ function App (props){
         arriveTimeEnd,
     } = props;
 
-    const onBack=useCallback(()=>window.history.back(),[])
-    useEffect(()=>{
-        const  queries=URI.parseQuery(window.location.search)
-        const {from,to,date,highSpeed} = queries
-        dispatch(setTo(to))
-        dispatch(setFrom(from))
+    const onBack = useCallback(() => window.history.back(), []);
+    useEffect(() => {
+        const queries = URI.parseQuery(window.location.search);
+        const { from, to, date, highSpeed } = queries;
+        dispatch(setTo(to));
+        dispatch(setFrom(from));
         dispatch(setDepartDate(h0(dayjs(date).valueOf())));
         dispatch(setHighSpeed(highSpeed === 'true'));
         dispatch(setSearchParsed(true));
-    },[]);
+    }, []);
 
     useEffect(() => {
         if (!searchParsed) {
             return;
         }
-        window.console.log(searchParsed)
+        window.console.log(searchParsed);
         const url = new URI('/rest/query')
             .setSearch('from', from)
             .setSearch('to', to)
@@ -105,7 +105,7 @@ function App (props){
             .setSearch('arriveTimeStart', arriveTimeStart)
             .setSearch('arriveTimeEnd', arriveTimeEnd)
             .toString();
-            window.console.log(url)
+        window.console.log(url);
         fetch(url)
             .then(response => response.json())
             .then(result => {
@@ -145,19 +145,17 @@ function App (props){
         arriveTimeStart,
         arriveTimeEnd,
     ]);
-    const isPrevDisabled=h0(departDate)<=h0()
-    const isNextDisabled=h0(departDate)-h0()>20*86400*1000
-    const prev= useCallback(()=>{
-        if (isPrevDisabled)
-            return
-        dispatch(prevDate())
-    },[isPrevDisabled])
+    const isPrevDisabled = h0(departDate) <= h0();
+    const isNextDisabled = h0(departDate) - h0() > 20 * 86400 * 1000;
+    const prev = useCallback(() => {
+        if (isPrevDisabled) return;
+        dispatch(prevDate());
+    }, [isPrevDisabled]);
 
-    const next= useCallback(()=>{
-        if (isNextDisabled)
-            return
-        dispatch(nextDate())
-    },[isNextDisabled])
+    const next = useCallback(() => {
+        if (isNextDisabled) return;
+        dispatch(nextDate());
+    }, [isNextDisabled]);
 
     const bottomCbs = useMemo(() => {
         return bindActionCreators(
@@ -179,39 +177,41 @@ function App (props){
         );
     }, []);
 
-
-
     if (!searchParsed) {
         return null;
     }
-    return(
+    return (
         <div>
-            <Header title={`${from}->${to}`} onBack={onBack}/>
-            <Nav     date={departDate}
-                     isPrevDisabled={isPrevDisabled}
-                     isNextDisabled={isNextDisabled}
-                     prev={prev}
-                     next={next} />
+            <Header title={`${from}->${to}`} onBack={onBack} />
+            <Nav
+                date={departDate}
+                isPrevDisabled={isPrevDisabled}
+                isNextDisabled={isNextDisabled}
+                prev={prev}
+                next={next}
+            />
             <List list={trainList} />
-            <Bottom {...bottomCbs}
-                    highSpeed={highSpeed}
-                    orderType={orderType}
-                    onlyTickets={onlyTickets}
-                    isFiltersVisible={isFiltersVisible}
-                    ticketTypes={ticketTypes}
-                    trainTypes={trainTypes}
-                    departStations={departStations}
-                    arriveStations={arriveStations}
-                    checkedTicketTypes={checkedTicketTypes}
-                    checkedTrainTypes={checkedTrainTypes}
-                    checkedDepartStations={checkedDepartStations}
-                    checkedArriveStations={checkedArriveStations}
-                    departTimeStart={departTimeStart}
-                    departTimeEnd={departTimeEnd}
-                    arriveTimeStart={arriveTimeStart}
-                    arriveTimeEnd={arriveTimeEnd}/>
+            <Bottom
+                {...bottomCbs}
+                highSpeed={highSpeed}
+                orderType={orderType}
+                onlyTickets={onlyTickets}
+                isFiltersVisible={isFiltersVisible}
+                ticketTypes={ticketTypes}
+                trainTypes={trainTypes}
+                departStations={departStations}
+                arriveStations={arriveStations}
+                checkedTicketTypes={checkedTicketTypes}
+                checkedTrainTypes={checkedTrainTypes}
+                checkedDepartStations={checkedDepartStations}
+                checkedArriveStations={checkedArriveStations}
+                departTimeStart={departTimeStart}
+                departTimeEnd={departTimeEnd}
+                arriveTimeStart={arriveTimeStart}
+                arriveTimeEnd={arriveTimeEnd}
+            />
         </div>
-    )
+    );
 }
 export default connect(
     function mapStateToProps(state) {

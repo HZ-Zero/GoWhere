@@ -1,50 +1,44 @@
-import React,{useMemo,memo,useState} from 'react';
+import React, { useMemo, memo, useState } from 'react';
 import './Bottom.css';
 import { ORDER_DEPART } from './constant';
-import Slider from'./Slider'
+import Slider from './Slider';
 
-
-const Filter = memo(function (props) {
-    const {name,checked,toggle,value} = props
+const Filter = memo(function(props) {
+    const { name, checked, toggle, value } = props;
     return (
-        <li className={checked?"checked":""} onClick={()=>toggle(value)}>
+        <li className={checked ? 'checked' : ''} onClick={() => toggle(value)}>
             {name}
         </li>
-    )
-})
+    );
+});
 
-
-const Option = memo(
-    function (props) {
-        const {title,options,checkedMap,update} = props
-        const toggle = (value)=>{
-            window.console.log(value)
-            const newCheckmap = {...checkedMap}
-            if(value in checkedMap)
-                delete newCheckmap[value]
-            else
-                newCheckmap[value]=true
-            update(newCheckmap)
-        }
-        return (
-            <div className="option">
-                <h3>{title}</h3>
-                <ul >
-                    {
-                        options.map(item=>{
-                            return (
-                                <Filter key={item.value} {...item} checked={item.value in checkedMap} toggle={toggle}>
-
-                                </Filter>
-                            )
-                        })
-                    }
-                </ul>
-            </div>
-        )
-    }
-)
-
+const Option = memo(function(props) {
+    const { title, options, checkedMap, update } = props;
+    const toggle = value => {
+        window.console.log(value);
+        const newCheckmap = { ...checkedMap };
+        if (value in checkedMap) delete newCheckmap[value];
+        else newCheckmap[value] = true;
+        update(newCheckmap);
+    };
+    return (
+        <div className="option">
+            <h3>{title}</h3>
+            <ul>
+                {options.map(item => {
+                    return (
+                        <Filter
+                            key={item.value}
+                            {...item}
+                            checked={item.value in checkedMap}
+                            toggle={toggle}
+                        ></Filter>
+                    );
+                })}
+            </ul>
+        </div>
+    );
+});
 
 const BottomModal = memo(function BottomModal(props) {
     const {
@@ -69,8 +63,8 @@ const BottomModal = memo(function BottomModal(props) {
         setArriveTimeStart,
         setArriveTimeEnd,
         toggleIsFiltersVisible,
-    } = props
-    const sure=()=>{
+    } = props;
+    const sure = () => {
         setCheckedTicketTypes(localCheckedTicketTypes);
         setCheckedTrainTypes(localCheckedTrainTypes);
         setCheckedDepartStations(localCheckedDepartStations);
@@ -83,22 +77,32 @@ const BottomModal = memo(function BottomModal(props) {
         setArriveTimeEnd(localArriveTimeEnd);
 
         toggleIsFiltersVisible();
-    }
-    const reset=()=>{
-        setLocalCheckedTicketTypes({})
-        setLocalCheckedTrainTypes({})
-        setlocalCheckedDepartStations({})
-        setlocalCheckedArriveStations({})
-        setLocalDepartTimeStart(0)
-        setLocalDepartTimeEnd(24)
-        setLocalArriveTimeStart(0)
-        setLocalArriveTimeEnd(24)
+    };
+    const reset = () => {
+        setLocalCheckedTicketTypes({});
+        setLocalCheckedTrainTypes({});
+        setlocalCheckedDepartStations({});
+        setlocalCheckedArriveStations({});
+        setLocalDepartTimeStart(0);
+        setLocalDepartTimeEnd(24);
+        setLocalArriveTimeStart(0);
+        setLocalArriveTimeEnd(24);
         // setLocalDepartTimeEnd({})
-    }
-    const [localCheckedTicketTypes,setLocalCheckedTicketTypes] = useState({...checkedTicketTypes})
-    const [localCheckedTrainTypes,setLocalCheckedTrainTypes] = useState({...checkedTrainTypes})
-    const [localCheckedDepartStations,setlocalCheckedDepartStations] = useState({...checkedDepartStations})
-    const [localCheckedArriveStations,setlocalCheckedArriveStations] = useState({...checkedArriveStations})
+    };
+    const [localCheckedTicketTypes, setLocalCheckedTicketTypes] = useState({
+        ...checkedTicketTypes,
+    });
+    const [localCheckedTrainTypes, setLocalCheckedTrainTypes] = useState({
+        ...checkedTrainTypes,
+    });
+    const [
+        localCheckedDepartStations,
+        setlocalCheckedDepartStations,
+    ] = useState({ ...checkedDepartStations });
+    const [
+        localCheckedArriveStations,
+        setlocalCheckedArriveStations,
+    ] = useState({ ...checkedArriveStations });
     const [localDepartTimeStart, setLocalDepartTimeStart] = useState(
         departTimeStart
     );
@@ -151,9 +155,8 @@ const BottomModal = memo(function BottomModal(props) {
                         </span>
                     </div>
                     <div className="options">
-                        {
-                            optionGroup.map(group => (
-                                <Option {...group} key={group.title} />
+                        {optionGroup.map(group => (
+                            <Option {...group} key={group.title} />
                         ))}
                         <Slider
                             title="出发时间"
@@ -173,15 +176,12 @@ const BottomModal = memo(function BottomModal(props) {
                 </div>
             </div>
         </div>
-    )
-    }
-    
-)
-
-
+    );
+});
 
 export default function Bottom(props) {
-    const {                toggleOrderType,
+    const {
+        toggleOrderType,
         toggleHighSpeed,
         toggleOnlyTickets,
         toggleIsFiltersVisible,
@@ -208,7 +208,8 @@ export default function Bottom(props) {
         departTimeStart,
         departTimeEnd,
         arriveTimeStart,
-        arriveTimeEnd} = props
+        arriveTimeEnd,
+    } = props;
 
     const noChecked = useMemo(() => {
         return (
@@ -236,25 +237,27 @@ export default function Bottom(props) {
         <div className="bottom">
             <div className="bottom-filters">
                 <span className="item" onClick={toggleOrderType}>
-                    <i className="icon" >&#xf065;</i>
+                    <i className="icon">&#xf065;</i>
                     {orderType === ORDER_DEPART ? '出发 早→晚' : '耗时 短→长'}
                 </span>
                 <span
-                    className={highSpeed?'item item-on':'item'}
+                    className={highSpeed ? 'item item-on' : 'item'}
                     onClick={toggleHighSpeed}
                 >
                     <i className="icon">{highSpeed ? '\uf43f' : '\uf43e'}</i>
                     只看高铁动车
                 </span>
                 <span
-                    className={onlyTickets?'item item-on':'item'}
+                    className={onlyTickets ? 'item item-on' : 'item'}
                     onClick={toggleOnlyTickets}
                 >
                     <i className="icon">{onlyTickets ? '\uf43d' : '\uf43c'}</i>
                     只看有票
                 </span>
                 <span
-                    className={isFiltersVisible || !noChecked?'item item-on':'item'}
+                    className={
+                        isFiltersVisible || !noChecked ? 'item item-on' : 'item'
+                    }
                     onClick={toggleIsFiltersVisible}
                 >
                     <i className="icon">{noChecked ? '\uf0f7' : '\uf446'}</i>
@@ -287,5 +290,5 @@ export default function Bottom(props) {
                 />
             )}
         </div>
-    )
+    );
 }

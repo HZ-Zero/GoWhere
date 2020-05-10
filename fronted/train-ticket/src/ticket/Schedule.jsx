@@ -20,26 +20,34 @@ const ScheduleRow = memo(function ScheduleRow(props) {
     return (
         <li>
             <div
-                className={isDepartStation || isArriveStation?'icon icon-red':'icon  '}
+                className={
+                    isDepartStation || isArriveStation
+                        ? 'icon icon-red'
+                        : 'icon  '
+                }
             >
-                {isDepartStation? '出': isArriveStation? '到': index}
+                {isDepartStation ? '出' : isArriveStation ? '到' : index}
             </div>
             <div
-                className={beforeDepartStation || afterArriveStation?'row  grey':'row '}
+                className={
+                    beforeDepartStation || afterArriveStation
+                        ? 'row  grey'
+                        : 'row '
+                }
             >
                 <span
-                    className={isArriveStation || isDepartStation?'station  red':'station' }
+                    className={
+                        isArriveStation || isDepartStation
+                            ? 'station  red'
+                            : 'station'
+                    }
                 >
                     {station}
                 </span>
-                <span
-                    className={isArriveStation?'arrtime red':'arrtime'}
-                >
+                <span className={isArriveStation ? 'arrtime red' : 'arrtime'}>
                     {isStartStation ? '始发站' : arriveTime}
                 </span>
-                <span
-                    className={isDepartStation?'deptime red':'deptime'}
-                >
+                <span className={isDepartStation ? 'deptime red' : 'deptime'}>
                     {isEndStation ? '终到站' : departTime}
                 </span>
                 <span className="stoptime">
@@ -48,7 +56,7 @@ const ScheduleRow = memo(function ScheduleRow(props) {
             </div>
         </li>
     );
-})
+});
 
 const Schedule = memo(function Schedule(props) {
     const { date, trainNumber, departStation, arriveStation } = props;
@@ -146,4 +154,4 @@ const Schedule = memo(function Schedule(props) {
     );
 });
 
-export  default Schedule
+export default Schedule;

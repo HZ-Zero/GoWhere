@@ -1,12 +1,9 @@
-import {
-    createStore,
-    combineReducers,
-    applyMiddleware
-} from 'redux'
-import reducers from './reducers'
-import thunk from 'redux-thunk'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import reducers from './reducers';
+import thunk from 'redux-thunk';
 export default createStore(
-    combineReducers(reducers),{
+    combineReducers(reducers),
+    {
         trainNumber: null,
         departStation: null,
         arriveStation: null,

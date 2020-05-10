@@ -1,7 +1,7 @@
 import React from 'react';
 import './DateSeletor.css';
 import { h0 } from '../common/fp';
-import Header from './Header.jsx'
+import Header from './Header.jsx';
 function Day(props) {
     const { day, onSelect } = props;
 
@@ -40,7 +40,6 @@ function Week(props) {
         </tr>
     );
 }
-
 
 function Month(props) {
     const { startingTimeInMonth, onSelect } = props;
@@ -95,16 +94,15 @@ function Month(props) {
                     <th className="weekend">周日</th>
                 </tr>
                 {weeks.map((week, idx) => {
-                return <Week key={idx} days={week} onSelect={onSelect} />;
-            })}
+                    return <Week key={idx} days={week} onSelect={onSelect} />;
+                })}
             </tbody>
         </table>
     );
 }
 
-
 function DateSeletor(props) {
-    const {show,onBack,onSelect}=props
+    const { show, onBack, onSelect } = props;
     const now = new Date();
     now.setHours(0);
     now.setMinutes(0);
@@ -121,8 +119,8 @@ function DateSeletor(props) {
     monthSequence.push(now.getTime());
 
     return (
-        <div className={show?"date-selector":"date-selector hidden"}>
-            <Header title="日期选择" onBack={onBack} ></Header>
+        <div className={show ? 'date-selector' : 'date-selector hidden'}>
+            <Header title="日期选择" onBack={onBack}></Header>
             <div className="date-selector-tables"></div>
             {/*<div>111111</div>*/}
             <div className="date-selector-tables">
@@ -137,6 +135,6 @@ function DateSeletor(props) {
                 })}
             </div>
         </div>
-    )
+    );
 }
-export  default  DateSeletor
+export default DateSeletor;

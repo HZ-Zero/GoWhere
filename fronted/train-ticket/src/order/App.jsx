@@ -1,14 +1,16 @@
-import './App.css'
-import {connect} from 'react-redux'
-import React,{useCallback,useEffect} from 'react'
-import URI from 'urijs'
-import Header from "../common/Header";
+import './App.css';
+import { connect } from 'react-redux';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import URI from 'urijs';
+import Header from '../common/Header';
 import dayjs from 'dayjs';
-import Detail from '../ticket/Detail'
-import Ticket from './Ticket'
-import Account from './Account'
-import Passengers from './Passengers'
-import Choose from './Choose'
+import Detail from '../ticket/Detail';
+import Ticket from './Ticket';
+import Account from './Account';
+import Passengers from './Passengers';
+import Choose from './Choose';
+import Menu from './Menu';
+import { bindActionCreators } from 'redux';
 import {
     setDepartStation,
     setArriveStation,
@@ -27,8 +29,7 @@ import {
     showTicketTypeMenu,
 } from './action';
 
-
-function App (props){
+function App(props) {
     const {
         trainNumber,
         departStation,
@@ -49,6 +50,22 @@ function App (props){
     const onBack = useCallback(() => {
         window.history.back();
     }, []);
+
+    const passengersCbs = useMemo(() => {
+        return bindActionCreators(
+            {
+                createAdult,
+                createChild,
+                removePassenger,
+                updatePassenger,
+                showGenderMenu,
+                showFollowAdultMenu,
+                showTicketTypeMenu,
+            },
+            dispatch
+        );
+    }, []);
+
     useEffect(() => {
         const queries = URI.parseQuery(window.location.search);
 
@@ -75,11 +92,27 @@ function App (props){
             .toString();
         dispatch(fetchInitial(url));
     }, [searchParsed, departStation, arriveStation, seatType, departDate]);
+    const menuCbs = useMemo(() => {
+        return bindActionCreators(
+            {
+                hideMenu,
+            },
+            dispatch
+        );
+    }, []);
+    const chooseCbs = useMemo(() => {
+        return bindActionCreators(
+            {
+                updatePassenger,
+            },
+            dispatch
+        );
+    }, []);
 
     return (
         <div className="app">
             <div className="header-wrapper">
-                <Header title="订单填写" onBack={onBack}/>
+                <Header title="订单填写" onBack={onBack} />
             </div>
             <div className="detail-wrapper">
                 <Detail
@@ -98,14 +131,15 @@ function App (props){
                     ></span>
                 </Detail>
                 <Ticket price={price} type={seatType} />
-                <Passengers passengers={passengers}  />
+                <Passengers passengers={passengers} {...passengersCbs} />
                 {passengers.length > 0 && (
-                    <Choose passengers={passengers}  />
+                    <Choose passengers={passengers} {...chooseCbs} />
                 )}
+                <Account length={passengers.length} price={price}></Account>
+                <Menu show={isMenuVisible} {...menu} {...menuCbs} />
             </div>
         </div>
-    )
-
+    );
 }
 export default connect(
     function mapStateToProps(state) {

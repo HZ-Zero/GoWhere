@@ -1,6 +1,6 @@
-import React,{memo,useMemo,useState,useRef,useEffect} from "react";
-import './Slider.css'
-import useWinSize from './useWinSize'
+import React, { memo, useMemo, useState, useRef, useEffect } from 'react';
+import './Slider.css';
+import useWinSize from './useWinSize';
 const Slider = memo(function Slider(props) {
     const {
         title,
@@ -38,8 +38,7 @@ const Slider = memo(function Slider(props) {
     }
 
     const startPercent = useMemo(() => {
-        if(start>=end)
-            return end
+        if (start >= end) return end;
         if (start > 100) {
             return 100;
         }
@@ -52,8 +51,7 @@ const Slider = memo(function Slider(props) {
     }, [start]);
 
     const endPercent = useMemo(() => {
-        if(end<=start)
-            return start
+        if (end <= start) return start;
         if (end > 100) {
             return 100;
         }
@@ -93,14 +91,13 @@ const Slider = memo(function Slider(props) {
 
     function onStartTouchMove(e) {
         const touch = e.targetTouches[0];
-        let distance = 0
-        if(lastEndX.current <= touch.pageX){
-            distance=  lastEndX.current - lastStartX.current;
+        let distance = 0;
+        if (lastEndX.current <= touch.pageX) {
+            distance = lastEndX.current - lastStartX.current;
             setStart(start => start + (distance / rangeWidth.current) * 100);
             lastStartX.current = lastEndX.current;
-        }
-        else{
-            distance =  touch.pageX - lastStartX.current;
+        } else {
+            distance = touch.pageX - lastStartX.current;
             setStart(start => start + (distance / rangeWidth.current) * 100);
             lastStartX.current = touch.pageX;
         }
@@ -205,4 +202,4 @@ const Slider = memo(function Slider(props) {
         </div>
     );
 });
-export default Slider
+export default Slider;

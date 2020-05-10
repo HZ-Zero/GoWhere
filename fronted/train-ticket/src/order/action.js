@@ -240,7 +240,7 @@ export function showGenderMenu(id) {
         if (!passenger) {
             return;
         }
-
+        // dispatch(showGenderMenu())
         dispatch(
             showMenu({
                 onPress(gender) {

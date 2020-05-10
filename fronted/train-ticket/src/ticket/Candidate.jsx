@@ -1,10 +1,10 @@
 import React, { memo, useState, useCallback, useContext, useMemo } from 'react';
 import URI from 'urijs';
 import dayjs from 'dayjs';
-import './Candidate.css'
-import {TrainContext} from './context'
-const Channel = memo(function (props) {
-    const {name,desc,type} = props
+import './Candidate.css';
+import { TrainContext } from './context';
+const Channel = memo(function(props) {
+    const { name, desc, type } = props;
     const {
         trainNumber,
         departStation,
@@ -30,11 +30,19 @@ const Channel = memo(function (props) {
                 <div className="buy">买票</div>
             </a>
         </div>
-    )
-})
+    );
+});
 
 const Seat = memo(function Seat(props) {
-    const {type,priceMsg,ticketsLeft,channels,idx,onToggle,expanded} = props
+    const {
+        type,
+        priceMsg,
+        ticketsLeft,
+        channels,
+        idx,
+        onToggle,
+        expanded,
+    } = props;
     return (
         <li>
             <div className="bar" onClick={() => onToggle(idx)}>
@@ -43,7 +51,7 @@ const Seat = memo(function Seat(props) {
                     <i>￥</i>
                     {priceMsg}
                 </span>
-                <span className="btn">{expanded?'收起':'预定'}</span>
+                <span className="btn">{expanded ? '收起' : '预定'}</span>
                 <span className="num">{ticketsLeft}</span>
             </div>
             <div
@@ -57,12 +65,8 @@ const Seat = memo(function Seat(props) {
                 })}
             </div>
         </li>
-
-    )
-
-}
-)
-
+    );
+});
 
 const Candidate = memo(function Candidate(props) {
     const { tickets } = props;

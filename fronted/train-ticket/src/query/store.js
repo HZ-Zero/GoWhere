@@ -1,14 +1,11 @@
-import {
-    createStore,
-    combineReducers,
-    applyMiddleware
-} from 'redux'
-import reducers from './reducers'
-import thunk from 'redux-thunk'
-import {h0} from "../common/fp";
-import {ORDER_DEPART} from './constant'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import reducers from './reducers';
+import thunk from 'redux-thunk';
+import { h0 } from '../common/fp';
+import { ORDER_DEPART } from './constant';
 export default createStore(
-    combineReducers(reducers),{
+    combineReducers(reducers),
+    {
         from: null,
         to: null,
         departDate: h0(Date.now()),

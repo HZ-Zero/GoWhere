@@ -1,8 +1,8 @@
-import React,{useMemo} from 'react'
-import './DepartDate.css'
-import {h0} from '../common/fp'
-import dayjs from 'dayjs'
-export default function DepartDate(props){
+import React, { useMemo } from 'react';
+import './DepartDate.css';
+import { h0 } from '../common/fp';
+import dayjs from 'dayjs';
+export default function DepartDate(props) {
     const { time, onClick } = props;
 
     const h0OfDepart = h0(time);
@@ -18,10 +18,10 @@ export default function DepartDate(props){
         '周' +
         ['日', '一', '二', '三', '四', '五', '六'][departDate.getDay()] +
         (isToday ? '(今天)' : '');
-    return(
+    return (
         <div className="depart-date" onClick={onClick}>
             <input type="hidden" name="date" value={departDateString} />
             {departDateString} <span className="depart-week">{weekString}</span>
         </div>
-    )
+    );
 }
