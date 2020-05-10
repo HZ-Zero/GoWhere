@@ -12,7 +12,7 @@ npm start
 
 ### 首页图层
 
-![image-20200510215240162](C:\Users\-ZERO\AppData\Roaming\Typora\typora-user-images\image-20200510215240162.png)
+![image-20200510215240162](https://github.com/HZ-Zero/GoWhere/blob/master/fronted/train-ticket/pic/image-20200510215240162.png)
 
 ### 筛选图层
 
