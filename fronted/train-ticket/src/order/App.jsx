@@ -84,12 +84,12 @@ function App(props) {
             return;
         }
 
-        const url = new URI('/rest/order')
-            .setSearch('dStation', departStation)
-            .setSearch('aStation', arriveStation)
-            .setSearch('type', seatType)
-            .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
-            .toString();
+        const url = 'http://127.0.0.1:8890/rest/order'
+            // .setSearch('dStation', departStation)
+            // .setSearch('aStation', arriveStation)
+            // .setSearch('type', seatType)
+            // .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
+            // .toString();
         dispatch(fetchInitial(url));
     }, [searchParsed, departStation, arriveStation, seatType, departDate]);
     const menuCbs = useMemo(() => {

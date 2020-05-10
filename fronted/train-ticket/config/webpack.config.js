@@ -55,7 +55,7 @@ module.exports = function(webpackEnv) {
         : isEnvDevelopment && '/';
     // Some apps do not use client-side routing with pushState.
     // For these, "homepage" can be set to "." to enable relative asset paths.
-    const shouldUseRelativeAssetPaths = publicPath === './';
+    const shouldUseRelativeAssetPaths = publicPath === '/';
 
     // `publicUrl` is just like `publicPath`, but we will provide it to our app
     // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
@@ -175,7 +175,7 @@ module.exports = function(webpackEnv) {
                 'production' !== process.env.NODE_ENV ||
                 'true' === process.env.USE_LOCAL_FILES
                     ? '/'
-                    : 'https://www.cdn.com/',
+                    : '/',
             // Point sourcemap entries to original disk location (format as URL on Windows)
             devtoolModuleFilenameTemplate: isEnvProduction
                 ? info =>
@@ -356,6 +356,7 @@ module.exports = function(webpackEnv) {
                                 ),
 
                                 plugins: [
+                                    // new BundleAnalyzerPlugin(),
                                     [
                                         require.resolve(
                                             'babel-plugin-named-asset-import'

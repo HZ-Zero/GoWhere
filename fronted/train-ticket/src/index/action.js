@@ -132,7 +132,7 @@ export function fetchCityData() {
 
         dispatch(setIsLoadingCityData(true));
 
-        fetch('/rest/cities?_' + Date.now())
+        fetch('http://127.0.0.1:8890/rest/cities?' + Date.now())
             .then(res => res.json())
             .then(cityData => {
                 dispatch(setCityData(cityData));

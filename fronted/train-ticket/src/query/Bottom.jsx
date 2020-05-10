@@ -15,7 +15,6 @@ const Filter = memo(function(props) {
 const Option = memo(function(props) {
     const { title, options, checkedMap, update } = props;
     const toggle = value => {
-        window.console.log(value);
         const newCheckmap = { ...checkedMap };
         if (value in checkedMap) delete newCheckmap[value];
         else newCheckmap[value] = true;

@@ -64,12 +64,13 @@ const Schedule = memo(function Schedule(props) {
     const [scheduleList, setScheduleList] = useState([]);
 
     useEffect(() => {
-        const url = new URI('/rest/schedule')
+        const url = new URI('http://127.0.0.1:8890/rest/order')
             .setSearch('trainNumber', trainNumber)
             .setSearch('departStation', departStation)
             .setSearch('arriveStation', arriveStation)
             .setSearch('date', dayjs(date).format('YYYY-MM-DD'))
-            .toString();
+            .toString()
+
         fetch(url)
             .then(response => response.json())
             .then(data => {

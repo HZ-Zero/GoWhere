@@ -76,8 +76,8 @@ function App(props) {
         if (!searchParsed) {
             return;
         }
-        window.console.log(searchParsed);
-        const url = new URI('/rest/query')
+        // window.console.log(searchParsed);
+        const url = new URI('http://127.0.0.1:8890/rest/query')
             .setSearch('from', from)
             .setSearch('to', to)
             .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
@@ -105,10 +105,11 @@ function App(props) {
             .setSearch('arriveTimeStart', arriveTimeStart)
             .setSearch('arriveTimeEnd', arriveTimeEnd)
             .toString();
-        window.console.log(url);
+        // window.console.log(url);
         fetch(url)
             .then(response => response.json())
             .then(result => {
+                // console.log(result)
                 const {
                     dataMap: {
                         directTrainInfo: {

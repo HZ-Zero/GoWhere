@@ -1,8 +1,18 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState,useEffect } from 'react';
 import './Account.css';
 const Account = memo(function(props) {
     const { price = 0, length } = props;
     const [expanded, setExpanded] = useState(false);
+    const [showMsg, setshowMsg] = useState('提交订单');
+    useEffect(()=>{
+        console.log(showMsg)
+    },[showMsg])
+    const show=(Msg)=>{
+        if (Msg=='提交订单')
+            setshowMsg('提交成功')
+        else
+            setshowMsg('提交订单')
+    }
     return (
         <div className="account">
             <div
@@ -12,12 +22,12 @@ const Account = memo(function(props) {
                 <div className="money">{length * price}</div>
                 <div className="amount">支付金额</div>
             </div>
-            <div className="button">提交按钮</div>
+            <div className="button" onClick={()=>show(showMsg)}>{showMsg}</div>
             <div
                 className={expanded ? 'layer' : 'layer hidden'}
                 onClick={() => setExpanded(false)}
             ></div>
-            <div className={expanded ? 'detail' : 'detail hidden'}>
+            <div className={expanded? 'detail' : 'detail hidden'}>
                 <div className="title">金额详情</div>
                 <ul>
                     <li>

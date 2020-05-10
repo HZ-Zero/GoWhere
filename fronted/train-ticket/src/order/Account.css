@@ -134,3 +134,7 @@
     width: 50px;
     text-align: right;
 }
+.Msg{
+    position: fixed;
+    top: 100px;
+}

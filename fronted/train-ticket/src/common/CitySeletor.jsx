@@ -102,6 +102,7 @@ const Suggest = memo(function Suggest(props) {
                     setResult(result);
                 }
             });
+        console.log()
     }, [searchKey]);
 
     const fallBackResult = useMemo(() => {

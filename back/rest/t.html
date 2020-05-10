@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="exp1"></div>
+
+<script>
+    // http://39.96.69.24/rest/cities cities.json
+    // http://39.96.69.24/rest/query?from=%E5%8C%97%E4%BA%AC&to=%E5%AE%89%E5%A4%9A&date=2020-05-10&highSpeed=false&orderType=1&onlyTickets=false&checkedTicketTypes=&checkedTrainTypes=&checkedDepartStations=&checkedArriveStations=&departTimeStart=0&departTimeEnd=24&arriveTimeStart=0&arriveTimeEnd=24
+    // 城市
+
+    fetch('http://127.0.0.1/rest/cities')
+        .then(response => response.json())
+        .then(data => {console.log(data)})
+    // fetch('./loacl.json')
+    //     .then(response => response.json())
+    //     .then(data => {console.log(data)})
+    fetch('./query.json')
+        .then(response => response.json())
+        .then(data => {console.log(data)})
+</script>
+</body>
+</html>

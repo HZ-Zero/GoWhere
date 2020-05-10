@@ -69,10 +69,11 @@ function App(props) {
 
     useEffect(() => {
         if (!setSearchParsed) return;
-        const url = new URI('/rest/ticket')
+        const url = new URI('http://127.0.0.1:8890/rest/train')
             .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
             .setSearch('trainNumber', trainNumber)
             .toString();
+
         fetch(url)
             .then(res => res.json())
             .then(result => {
