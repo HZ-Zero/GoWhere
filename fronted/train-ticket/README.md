@@ -9,7 +9,7 @@ npm install
 npm start
 ```
 ## 效果展示
-
+11
 ### 首页图层
 
 ![image-20200510215240162](https://github.com/HZ-Zero/GoWhere/blob/master/fronted/train-ticket/pic/image-20200510215240162.png)
